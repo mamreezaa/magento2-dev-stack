@@ -1,0 +1,54 @@
+version: "3"
+services:
+  nginx:
+    build: images/nginx
+    volumes: &appvolumes
+      - ./src:/var/www/html
+    ports:
+      - "8080:80"
+  phpfpm:
+    build: images/phpfpm
+    volumes: *appvolumes
+
+  rds:
+    image: mariadb:10.8.2
+    ports:
+      - "3306:3306"
+    env_file: rds.env
+    volumes:
+      - rdsdata:/var/lib/mysql
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025" #smtp server
+      - "8025:8025" #web ui
+
+  rabbitmq:
+    build: images/rabbitmq
+    ports:
+      - "15672:15672" #web-ui
+      - "5672:5672" #amqp
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+    env_file: rmq.env
+
+  redis:
+    image: redis:6.2-alpine
+    ports:
+      - "6379:6379"
+
+  elasticsearch:
+    image: elasticsearch:7.17.3
+    ports:
+      - "9200:9200" #API calls over HTTP
+      - "9300:9300" #communications between nodes in a cluster
+    environment:
+      - "discovery.type=single-node"
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - "cluster.routing.allocation.disk.threshold_enabled=false"
+      - "index.blocks.read_only_allow_delete"
+
+volumes:
+  rdsdata:
+  rabbitmq:
