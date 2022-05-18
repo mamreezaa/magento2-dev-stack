@@ -1,1 +1,4 @@
 .idea
+readme.md
+src/*
+images/phpfpm/conf/auth.json
