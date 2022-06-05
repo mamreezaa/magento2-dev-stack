@@ -1,3 +1,4 @@
 .idea
 src/*
+magento/*
 images/phpfpm/conf/auth.json

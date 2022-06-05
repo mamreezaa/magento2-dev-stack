@@ -3,9 +3,10 @@ services:
   nginx:
     build: images/nginx
     volumes: &appvolumes
-      - ./src:/var/www/html
+      - ./magento:/var/www/html
+      - sockdata:/sock
     ports:
-      - "8080:80"
+      - "443:8443"
   phpfpm:
     build: images/phpfpm
     volumes: *appvolumes
@@ -52,3 +53,4 @@ services:
 volumes:
   rdsdata:
   rabbitmq:
+  sockdata:

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+printf "Downloading ..."
+wget https://github.com/magento/magento2/archive/refs/tags/2.4.4.zip -O /tmp/magento2-2.4.4.zip \
+&& unzip /tmp/magento2-2.4.4.zip -d /tmp \
+&& mkdir -p magento \
+&& mv /tmp/magento2-2.4.4/* ./magento \
+&& rm -rf /tmp/magento2-2.4.4.zip /tmp/magento2-2.4.4
+
+

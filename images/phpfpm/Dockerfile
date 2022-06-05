@@ -4,6 +4,22 @@ ENV USER=app
 ENV UID=1000
 ENV GID=1000
 
+RUN addgroup -g $GID $USER
+
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "$(pwd)" \
+    --ingroup "$USER" \
+    --no-create-home \
+    --uid "$UID" \
+    "$USER"
+
+
+RUN mkdir -p /etc/nginx/html /var/www/html /sock \
+  && chown -R app:app /etc/nginx /var/www /usr/local/etc/php/conf.d /sock
+
+
 RUN apk update && apk --no-cache add \
     bash \
     gzip \
@@ -33,20 +49,7 @@ RUN docker-php-ext-configure \
     xsl \
     zip
 
-RUN addgroup -g $GID $USER
 
-RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --home "$(pwd)" \
-    --ingroup "$USER" \
-    --no-create-home \
-    --uid "$UID" \
-    "$USER"
-
-
-RUN mkdir -p /etc/nginx/html /var/www/html /sock \
-  && chown -R app:app /etc/nginx /var/www /usr/local/etc/php/conf.d /sock
 
 RUN curl -sS https://getcomposer.org/installer | \
   php -- --install-dir=/usr/local/bin --filename=composer
