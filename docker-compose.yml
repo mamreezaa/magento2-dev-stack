@@ -7,12 +7,17 @@ services:
       - sockdata:/sock
     ports:
       - "443:8443"
+      - "9001:9001"
+
   phpfpm:
     build: images/phpfpm
     volumes: *appvolumes
+    environment:
+      PHP_IDE_CONFIG: "serverName=magento"
 
   rds:
-    image: mariadb:10.8.2
+    image: mariadb:10.4
+    command: --max_allowed_packet=64M
     ports:
       - "3306:3306"
     env_file: rds.env
@@ -49,6 +54,7 @@ services:
       - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
       - "cluster.routing.allocation.disk.threshold_enabled=false"
       - "index.blocks.read_only_allow_delete"
+
 
 volumes:
   rdsdata:
