@@ -51,8 +51,8 @@ bin/phpfpm-cli bin/magento setup:install \
   --session-save-redis-log-level=4 \
   --session-save-redis-db=2 \
   --search-engine=elasticsearch7 \
-  --elasticsearch-host=$ES_HOST \
-  --elasticsearch-port=$ES_PORT \
+  --elasticsearch-host="elasticsearch" \
+  --elasticsearch-port="9200" \
   --use-rewrites=1 \
   --no-interaction
 

@@ -6,7 +6,7 @@ services:
       - ./magento:/var/www/html
       - sockdata:/sock
     ports:
-      - "443:8443"
+      - "80:80"
       - "9001:9001"
 
   phpfpm:

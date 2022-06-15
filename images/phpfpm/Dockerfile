@@ -51,9 +51,9 @@ RUN docker-php-ext-configure \
     zip
 
 
-RUN apk add --no-cache $PHPIZE_DEPS \
-    && pecl install xdebug-3.1.0 \
-    && docker-php-ext-enable xdebug
+#RUN apk add --no-cache $PHPIZE_DEPS \
+#    && pecl install xdebug-3.1.0 \
+#    && docker-php-ext-enable xdebug
 
 RUN curl -sS https://getcomposer.org/installer | \
   php -- --install-dir=/usr/local/bin --filename=composer
@@ -61,7 +61,7 @@ RUN curl -sS https://getcomposer.org/installer | \
 COPY conf/php.ini $PHP_INI_DIR
 COPY conf/php-fpm.conf /usr/local/etc/
 COPY conf/www.conf /usr/local/etc/php-fpm.d/
-COPY conf/docker-xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+#COPY conf/docker-xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 
 USER app:app
